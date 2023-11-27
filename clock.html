@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> Analog Clock </title>
+        <style>
+            body{
+                display: flex;
+                justify-content: center;
+                align-items:center;
+                height: 100vh;
+                background-color: gray;
+                color:white;
+                font-family: sans-serif;
+             }
+            .container{
+                position: absolute;
+            }
+            .clock{
+                width: 300px;
+                height:300px;
+                border-radius: 50%;
+                border-color: black;
+                background-color: black;
+                box-shadow: 0px 0px 30px white;
+                border: 2px solid white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .clock span{
+                position: absolute;
+                transform: rotate(calc(30deg * var(--i) )); /* 360/12=30 and --i*30 will rotate the elements 30 deg to each element */
+                inset: 12px;
+                text-align: center;
+
+            }
+            .clock span b
+            {
+                transform: rotate(calc(-30deg * var(--i) ));
+                display: inline-block;
+                font-size: 20px;    
+            }
+            .clock::before{ /* this is making the circle inside clock, :: makes it on top or down of the element*/
+                content: " ";
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: white;
+                z-index: 2; /*this to make the element up the others*/
+            }
+            .hand{
+                position: absolute;
+                display: flex;
+                align-items: flex-end; /*flex-end makes the thing start from its end*/
+                justify-content: center;
+            }
+            .hand i{
+                position: absolute;
+                background-color: var(--clr); /* this is to use variable used in tags, 
+                                                if we are giving same class to many tags then
+                                                must write this to see the changings by this variable*/
+                width: 4px;
+                height: var(--h);
+                border-radius: 5px;
+             }
+
+        </style>
+       
+        </head>
+    </head>
+    <body>
+        
+        <div class="container">
+
+            <div class="clock" >
+                <!--for hands-->
+                <div style="--clr:red; --h:90px;" class="hand" id="sec"><i></i></div> <!-- same as <b>, clr is for color and h is for height-->
+                <div style="--clr:blue; --h:70px;" class="hand" id="min"><i></i></div> <!-- (--) is must to declare a variable in tags-->
+                <div style="--clr:white; --h:50px;" class="hand" id="hour"><i></i></div>
+                <!--for numbers-->
+                <span style="--i:1;"><b>1</b></span> <!--span is used when we added a class inside another class, to add new properties-->
+                <span style="--i:2;"><b>2</b></span> <!--<b> is written for text so that we can design text easily -->
+                <span style="--i:3;"><b>3</b></span>
+                <span style="--i:4;"><b>4</b></span>
+                <span style="--i:5;"><b>5</b></span>
+                <span style="--i:6;"><b>6</b></span>
+                <span style="--i:7;"><b>7</b></span>
+                <span style="--i:8;"><b>8</b></span>
+                <span style="--i:9;"><b>9</b></span>
+                <span style="--i:10;"><b>10</b></span>
+                <span style="--i:11;"><b>11</b></span>
+                <span style="--i:12;"><b>12</b></span>
+            </div> 
+        </div>
+        <!-- <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> -->
+       <script>
+            let hr = document.getElementById('hour');
+            let min = document.getElementById('min');
+            let sec = document.getElementById('sec');
+
+
+
+            function displayTime(){
+                let date = new Date();
+                //getting hours, mins & secs from Date()
+                let hh = date.getHours(); //date is aour variable which we let
+                let mm = date.getMinutes();
+                let ss = date.getSeconds();
+
+                let hRotation=30*hh + mm/2; //30 is the degree from 1 to 2 in clock and m is the small lines in that area
+                let mRotation=6*mm; //6 is degree bw lines of clock
+                let sRotation=6*ss; //same
+            
+                hr.style.transform = `rotate(${hRotation}deg)`;
+                min.style.transform = `rotate(${mRotation}deg)`;
+                sec.style.transform = `rotate(${sRotation}deg)`;
+            }
+            setInterval(displayTime, 1000)
+
+        </script>    
+    </body>
+</html>
